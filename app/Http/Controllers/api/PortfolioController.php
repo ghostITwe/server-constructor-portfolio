@@ -4,16 +4,16 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Portfolio;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PortfolioController extends Controller
 {
-    public function createPortfolio($data)
+    public function savePortfolio(Request $request)
     {
-        $portfolio = Portfolio::create([
-            'user_id' => auth()->user(),
-            'data' => $data
-        ]);
+        $portfolio = User::findOrFail($request->user()->id);
+
+        dd($request->portfolio);
 
         return response()->json([
             'status' => true

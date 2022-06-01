@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('middle_name')->nullable();
             $table->string('email')->unique();
             $table->string('password');
+            $table->json('portfolio')->nullable();
             $table->timestamps();
         });
     }

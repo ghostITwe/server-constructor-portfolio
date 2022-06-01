@@ -23,7 +23,7 @@ class AuthService
                 'errors' => [
                     'Неправильный логин или пароль.'
                 ]
-            ]);
+            ])->setStatusCode(401);
         }
 
         return response()->json([
