@@ -29,4 +29,14 @@ class RegisterRequest extends FormRequest
             'password' => 'required|min:6|string|confirmed'
         ];
     }
+
+    public function attributes()
+    {
+        return [
+            'email' => 'почта',
+            'password' => 'пароль'
+        ];
+    }
+
+
 }

@@ -28,4 +28,12 @@ class AuthRequest extends FormRequest
             'password' => 'required|min:6|string'
         ];
     }
+
+    public function attributes()
+    {
+        return [
+            'email' => 'почта',
+            'password' => 'пароль'
+        ];
+    }
 }

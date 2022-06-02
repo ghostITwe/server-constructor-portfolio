@@ -21,7 +21,7 @@ class AuthService
             return response()->json([
                 'status' => false,
                 'errors' => [
-                    'Неправильный логин или пароль.'
+                    'Неправильно введена почта или пароль.'
                 ]
             ])->setStatusCode(401);
         }
@@ -49,7 +49,7 @@ class AuthService
 
     public function logout(): JsonResponse
     {
-        auth()->user()->currentAccessToken()->delete();
+        auth()->user()->currentAcceessToken()->delete();
 
         return response()->json([
             'status' => true,
