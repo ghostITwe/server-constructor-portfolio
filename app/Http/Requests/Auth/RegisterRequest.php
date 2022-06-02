@@ -38,5 +38,11 @@ class RegisterRequest extends FormRequest
         ];
     }
 
+    public function messages()
+    {
+        return [
+          'email.unique' => 'Такая почта уже используется'
+        ];
+    }
 
 }
