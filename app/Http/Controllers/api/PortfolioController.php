@@ -5,18 +5,20 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Models\Portfolio;
 use App\Models\User;
+use App\Services\Portfolio\PortfolioService;
 use Illuminate\Http\Request;
 
 class PortfolioController extends Controller
 {
+    private PortfolioService $portfolioService;
+
+    public function __construct(PortfolioService $portfolioService)
+    {
+        $this->portfolioService = $portfolioService;
+    }
+
     public function savePortfolio(Request $request)
     {
-        $portfolio = User::findOrFail($request->user()->id);
-
-        dd($request->portfolio);
-
-        return response()->json([
-            'status' => true
-        ]);
+        return $this->portfolioService->savePortfolio($request);
     }
 }
