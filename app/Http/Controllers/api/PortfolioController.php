@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Portfolio;
 use App\Models\User;
 use App\Services\Portfolio\PortfolioService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class PortfolioController extends Controller
@@ -17,8 +18,13 @@ class PortfolioController extends Controller
         $this->portfolioService = $portfolioService;
     }
 
-    public function savePortfolio(Request $request)
+    public function savePortfolio(Request $request): JsonResponse
     {
         return $this->portfolioService->savePortfolio($request);
+    }
+
+    public function getPortfolio()
+    {
+        return $this->portfolioService->getPortfolio();
     }
 }
