@@ -1,64 +1,93 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# Server-constructor-portfolio
 
-## About Laravel
+Репозиторий серверной части дипломного проекта – сервиса конструктора портфолио для IT-специалистов.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Локальный запуск
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Склонировать репозиторий
 
-## Learning Laravel
+```bash
+  git clone https://github.com/ghostITwe/server-constructor-portfolio.git
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Перейти в директорию проекта
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```bash
+  cd server-constructor-portfolio
+```
 
-## Laravel Sponsors
+Установить необходимые зависимости
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+```bash
+  composer i
+```
 
-### Premium Partners
+Выполнить команду sail up
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+```bash
+  ./vendor/bin/sail up
+```
 
-## Contributing
+После запуска sail up, сгенерировать `APP_KEY` для дальнейшей работы
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+  sail artisan key:generate
+```
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Переменные среды
 
-## Security Vulnerabilities
+Чтобы корректно запустился проект, необходимо изменить `.env.example` на `.env`, после чего ввести нужные значения
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+`DB_USERNAME`
 
-## License
+`DB_PASSWORD`
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+## Проверка API-endpoints
+
+### Регистрация
+
+```http
+  POST your_host/api/registration
+```
+
+| Параметр | Тип     | Описание                |
+| :-------- | :------- | :------------------------- |
+| `email` | `string` | **Обязательное**, **Уникальное**, **Почта**|
+| `password` | `string` | **Обязательное**, **Минимально 6 символов** |
+| `password_confirmation` | `string` | **Обязательное** |
+
+#### Успешный ответ
+
+```response
+  {
+    'status': true,
+    'token': 1|i0VTSlnBDDOvnxCpkKBXvtAOP39MMZGsZdfmah3m -- example
+  }
+```
+
+### Авторизация
+
+```http
+  POST your_host/api/auth
+```
+
+| Параметр | Тип     | Описание                |
+| :-------- | :------- | :------------------------- |
+| `email` | `string` | **Обязательное**, **Почта**|
+| `password` | `string` | **Обязательное**, **Минимально 6 символов** |
+
+#### Успешный ответ
+
+```response
+  {
+    'status': true,
+    'token': 1|i0VTSlnBDDOvnxCpkKBXvtAOP39MMZGsZdfmah3m -- example
+  }
+```
+
+
