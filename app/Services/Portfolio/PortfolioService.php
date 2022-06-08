@@ -4,22 +4,31 @@ namespace App\Services\Portfolio;
 
 
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class PortfolioService
 {
-    public function savePortfolio(Request $request)
+    public function savePortfolio(Request $request): JsonResponse
     {
-        return response()->json([
-            'status' => true,
-            'req' => $request
-        ]);
+        $postData = $request->all();
+
         $userPortfolio = User::findOrFail(auth()->user()->id);
-        $userPortfolio->portfolio = '';
+        $userPortfolio->portfolio = json_encode($postData['contentValue'], JSON_UNESCAPED_UNICODE);
+        $userPortfolio->save();
+
+        return response()->json([
+            'status' => true
+        ]);
     }
 
-    public function getPortfolio()
+    public function getPortfolio(): JsonResponse
     {
-        return [];
+        $userPortfolio = User::findOrFail(auth()->user()->id);
+
+       return response()->json([
+           'status' => true,
+           'contentPortfolio' => json_decode($userPortfolio->portfolio)
+       ]);
     }
 }
