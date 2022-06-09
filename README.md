@@ -36,6 +36,12 @@
   sail artisan key:generate
 ```
 
+Запустить миграции для создания таблиц в базу данных
+
+```bash
+  sail artisan migrate
+```
+
 
 ## Переменные среды
 
