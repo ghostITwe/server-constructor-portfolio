@@ -31,7 +31,7 @@ class AuthService
 
         return response()->json([
             'status' => true,
-            'nickName' => auth()->user()->nickName,
+            'username' => auth()->user()->username,
             'token' => auth()->user()->createToken('auth')->plainTextToken
         ]);
     }
@@ -48,7 +48,7 @@ class AuthService
 
         return response()->json([
             'status' => true,
-            'nickName' => $user->nickName,
+            'username' => $user->username,
             'token' => $user->createToken('registration')->plainTextToken
         ]);
     }
