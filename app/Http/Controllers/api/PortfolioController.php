@@ -23,8 +23,8 @@ class PortfolioController extends Controller
         return $this->portfolioService->savePortfolio($request);
     }
 
-    public function getPortfolio()
+    public function getPortfolio(Request $request, $username)
     {
-        return $this->portfolioService->getPortfolio();
+        return $this->portfolioService->getPortfolio($request, $username);
     }
 }

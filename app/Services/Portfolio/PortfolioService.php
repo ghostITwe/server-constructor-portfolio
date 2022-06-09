@@ -4,12 +4,15 @@ namespace App\Services\Portfolio;
 
 
 use App\Models\User;
+use http\Env\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Laravel\Sanctum\PersonalAccessToken;
+use function Symfony\Component\String\u;
 
 class PortfolioService
 {
-    public function savePortfolio(Request $request): JsonResponse
+    public function savePortfolio($request): JsonResponse
     {
         $postData = $request->all();
 
@@ -22,13 +25,37 @@ class PortfolioService
         ]);
     }
 
-    public function getPortfolio(): JsonResponse
+    public function getPortfolio($request, $username): JsonResponse
     {
-        $userPortfolio = User::findOrFail(auth()->user()->id);
+       $userPortfolio = User::query()->where('nickName', $username)->first();
+
+       if (!$userPortfolio) {
+           return response()->json([
+               'status' => false,
+               'errors' => [
+                   'message' => [
+                       'Портфолио не найдено'
+                   ]
+               ]
+           ])->setStatusCode(404);
+       }
 
        return response()->json([
            'status' => true,
-           'contentPortfolio' => json_decode($userPortfolio->portfolio)
+           'contentPortfolio' => json_decode($userPortfolio->portfolio),
+           'editStatusAccess' => $this->checkEditStatusAccess($request, $username)
        ]);
+    }
+
+    private function checkEditStatusAccess($request, $username): bool
+    {
+        $token = PersonalAccessToken::findToken($request->bearerToken());
+
+        if (!$token) return false;
+
+        $currentUser = User::query()->find($token->tokenable_id, 'nickName');
+        $ownerUser = User::query()->where('nickName', $username)->first('nickName');
+
+        return $currentUser->nickName === $ownerUser->nickName;
     }
 }
