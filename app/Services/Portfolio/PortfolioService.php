@@ -53,9 +53,9 @@ class PortfolioService
 
         if (!$token) return false;
 
-        $currentUser = User::query()->find($token->tokenable_id, 'nickName');
-        $ownerUser = User::query()->where('nickName', $username)->first('nickName');
+        $currentUser = User::query()->find($token->tokenable_id, 'username');
+        $ownerUser = User::query()->where('username', $username)->first('username');
 
-        return $currentUser->nickName === $ownerUser->nickName;
+        return $currentUser->username === $ownerUser->username;
     }
 }
