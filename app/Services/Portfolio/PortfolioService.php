@@ -27,7 +27,7 @@ class PortfolioService
 
     public function getPortfolio($request, $username): JsonResponse
     {
-       $userPortfolio = User::query()->where('nickName', $username)->first();
+       $userPortfolio = User::query()->where('username', $username)->first();
 
        if (!$userPortfolio) {
            return response()->json([
