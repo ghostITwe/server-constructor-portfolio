@@ -43,7 +43,7 @@ class PortfolioService
        return response()->json([
            'status' => true,
            'contentPortfolio' => json_decode($userPortfolio->portfolio),
-           'editStatusAccess' => $this->checkEditStatusAccess($request, $username)
+           'editAccess' => $this->checkEditStatusAccess($request, $username)
        ]);
     }
 

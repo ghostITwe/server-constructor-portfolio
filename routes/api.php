@@ -11,6 +11,8 @@ Route::post('/registration', [AuthController::class, 'registration']);
 Route::get('/portfolio/{username}', [PortfolioController::class, 'getPortfolio']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
+//    Route::get('/user', [UserController::class]);
+
     Route::post('/portfolio', [PortfolioController::class, 'savePortfolio']);
     Route::post('/logout', [AuthController::class, 'logout']);
 });
